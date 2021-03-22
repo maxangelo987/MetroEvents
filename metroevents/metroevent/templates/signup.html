@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Sign up</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'images/assets/img/favicon.ico' %}" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <style type="text/css">
+      body{
+  margin: 0;
+  padding: 0;
+} 
+.signup-form{
+  width: 50%;
+  height: 80%;
+  padding: 20px;
+  text-align: center; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  overflow: hidden;
+  color: #fed136;
+  border-radius: 10px;
+  background-color: white;
+}
+.signup-form h1{
+  margin: auto;
+  color: #fed136;
+  font-size: 30px;
+}
+.signup-form input{
+  display: block;
+  margin-left: 75px;
+  width: 75%;
+  padding: 0 16px;
+  height: 30px;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  font-family: "montserrat",sans-serif;
+  color: black;
+}
+.txtb{
+  margin: 20px 0;
+  background: #fcfcf7;
+  border-radius: 6px;
+}
+.signup-btn{
+  margin-top: 60px;
+  margin-bottom: 20px;
+  background: #fed136;
+  color: black;
+  border-radius: 44px;
+  cursor: pointer;
+  transition: 0.8s;
+}
+.signup-btn:hover{
+  transform: scale(0.96);
+}
+.signup-form a{
+  text-decoration: none;
+  color: black;
+  font-family: "montserrat",sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  transition: 0.8s;
+  display: block;
+}
+.signup-form a:hover{
+  background: rgba(0,0,0,.3);
+}
+
+    </style>
+    {% block content %}
+     <body style=" background-image: url(/static/images/bg.jpg)">
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{% static 'images/metro.jfif' %}" alt="" /></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ml-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ml-auto">
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <div class="signup-form center">
+      <form class="" method="POST">
+        {% csrf_token %}
+        <h1>Sign Up</h1>
+        <br>
+        <input type="text" name="first_name" maxlength="150" required="" id="id_first_name" autofocus placeholder="First Name" class="txtb">
+        <input type="text" name="last_name" maxlength="150" required="" id="id_last_name" placeholder="Last Name" class="txtb">
+        <input type="text" name="username" maxlength="150" required="" id="id_username" placeholder="username" class=txtb>
+        <input type="email" name="email" maxlength="150" required="" id="id_email" placeholder="Email" class="txtb">
+        <!--<input type="text" placeholder="Contact No" class="txtb">
+        <input type="date" placeholder="Birthday" class="txtb"> -->
+        <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Password" class="txtb">
+        <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Confirm Password" class="txtb">
+        <input type="submit" value="Create Account" class="signup-btn">
+       <div class= "form-group">
+            <!-- {{form.errors}} -->
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+            <li>
+            <div class="alert-success"> {{ message }}</div>
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif%}
+          </div>
+      </form>
+    </div>
+  </body>
+  {% endblock content %}
+</html>

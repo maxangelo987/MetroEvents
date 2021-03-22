@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Log in</title>
+        <link rel="icon" type="image/x-icon" href="{% static 'images/assets/img/favicon.ico' %}" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <style type="text/css">
+      body{
+  margin: 0;
+  padding: 0;
+} 
+.login-form{
+  width: 35%;
+  height: 70%;
+  padding: 20px;
+  text-align: center; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  overflow: hidden;
+  color: #fed136;
+  border-radius: 10px;
+  background-color: white;
+}
+.login-form h1{
+  margin-top: 50px;
+  color: #fed136;
+  font-size: 40px;
+}
+.login-form input{
+  display: block;
+  width: 100%;
+  padding: 0 16px;
+  height: 44px;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  font-family: "montserrat",sans-serif;
+  color: black;
+}
+.txtb{
+  margin: 20px 0;
+  background: #fcfcf7;
+  border-radius: 6px;
+}
+.login-btn{
+  margin-top: 60px;
+  margin-bottom: 20px;
+  background: #fed136;
+  color: black;
+  border-radius: 44px;
+  cursor: pointer;
+  transition: 0.8s;
+}
+.login-btn:hover{
+  transform: scale(0.96);
+}
+.login-form a{
+  text-decoration: none;
+  color: black;
+  font-family: "montserrat",sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  transition: 0.8s;
+  display: block;
+}
+.login-form a:hover{
+  background: rgba(0,0,0,.3);
+}
+
+    </style>
+     <body style=" background-image: url(/static/images/bg.jpg)">
+      <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{% static 'images/metro.jfif' %}" alt="" /></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ml-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ml-auto">
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <div class="login-form center">
+      <form class="" method="post">
+        {% csrf_token %}
+        <h1>Log in</h1>
+        <input type="text" name="username" id="id_username" required="" placeholder="Username" class="txtb">
+        <input type="password" name="password" autocomplete="new-password" required="" id="id_password" placeholder="Password" class="txtb">
+        <input type="submit" value="Log in" class="login-btn">
+        <a href='{% url "metroevent:SignUpView" %}'>No account? Sign up here</a>
+      </form>
+    </div>
+  </body>
+</html>
