@@ -67,6 +67,12 @@ class IndexView(View):
 
 class HomePageView(View):
 	def get(self, request):
+
+		event = Event.objects.all()
+		context = {
+				'events' : event,
+				}
+
 		return render(request, 'homepage.html')
 
 class AdminView(View):
