@@ -31,7 +31,6 @@ def SignUpView(request):
 	context = {'form':form}
 	return render(request,'signup.html',context)
 
-
 class LoginView(View):
 	def get(self, request):
 		return render(request, 'login.html')
@@ -82,7 +81,12 @@ class AdminView(View):
 
 class UsersAdminView(View):
 	def get(self, request):
-		return render(request, 'users.html')
+		user = User.objects.all()
+
+		context = {
+				'users' : user,
+				}
+		return render(request, 'users.html', context)
 
 class EventsAdminView(View):
 	def get(self, request):
@@ -108,3 +112,7 @@ class OrgProfileView(View):
 class AddEventView(View):
 	def get(self, request):
 		return render(request, 'addevent.html')
+
+class RequestView(View):
+	def get(self, request):
+		return render(request, 'requests.html')

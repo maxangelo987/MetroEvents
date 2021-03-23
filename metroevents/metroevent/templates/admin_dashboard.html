@@ -51,75 +51,28 @@
                             <a href='{% url "metroevent:UsersAdminView" %}'><h4>USERS LIST SUMMARY </h4></a>            
                         </div>
                                    
-                        <table id="example" class="table table-striped table-bordered" style="width:100%">
-                        <thead>
-                            <tr>                  
-                                <th>ID NUMBER</th>
-                                <th>FIRSTNAME</th>
-                                <th>LASTNAME</th>                   
-                            </tr>
-                        </thead>
-                        <tbody>              
-                               {% for user in users %}                       
-                            <tr>
-                                <td>{{user.id}}</td>
-                                <td>{{user.first_name}}</td>
-                                <td>{{user.last_name}}</td>
-                                
-                            </tr>
-                {% endfor %}
-                        </tbody>
-                        </table>
+                    
 <br>
                         <div>
                 <a href='{% url "metroevent:EventsAdminView" %}'><h4>EVENTS LIST SUMMARY </h4> </a>
                 
             </div>
           
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>ID NUMBER</th>                  
-                    <th>TITLE</th>
-                    <th>DESCRIPTION</th>                   
-                </tr>
-            </thead>
-            <tbody>              
-                                          
-                <tr>
-                    <td>12-456-789</td>
-                    <td>Zumba</td>
-                    <td>Dance exercise</td>
-                </tr>
-    
-            </tbody>
-        </table>
+            
         <br>
         <div>
                <a href='{% url "metroevent:OrgAdminView" %}'>  <h4>ORGANIZERS LIST SUMMARY </h4></a>
                 
             <!--  <button onclick="location.href = 'http://127.0.0.1:8000/metroevent/organizers_admin/';" id="myButton" class="float-left submit-button" style="border-radius: 4px; height: 4%; width: 6%; font-size: 20px; background-color: #fed136; border: none; position: absolute; right: 0; top: 117%; right: 12.3%;"><i class="fa fa-book"></i> VIEW</button> -->
             </div>
+
+             <div>
+               <a href='{% url "metroevent:RequestView" %}'>  <h4>REQUEST TABLE </h4></a>
+                
+            <!--  <button onclick="location.href = 'http://127.0.0.1:8000/metroevent/organizers_admin/';" id="myButton" class="float-left submit-button" style="border-radius: 4px; height: 4%; width: 6%; font-size: 20px; background-color: #fed136; border: none; position: absolute; right: 0; top: 117%; right: 12.3%;"><i class="fa fa-book"></i> VIEW</button> -->
+            </div>
             
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>                  
-                    <th>ID NUMBER</th>
-                    <th>FIRSTNAME</th>
-                    <th>LASTNAME</th>                   
-                </tr>
-            </thead>
-            <tbody>              
-                                          
-                <tr>
-                    <td>15-675-462</td>
-                    <td>Diego</td>
-                    <td>Sanches</td>
-                    
-                </tr>
-    
-            </tbody>
-        </table>
+            
                     </div>
                 </div>
             </div>

@@ -20,6 +20,7 @@ urlpatterns = [
     path('users_admin/', views.UsersAdminView.as_view(), name="UsersAdminView"),
     path('events_admin/', views.EventsAdminView.as_view(), name="EventsAdminView"),
     path('organizers_admin/', views.OrgAdminView.as_view(), name="OrgAdminView"),
+    path('requests/', views.RequestView.as_view(), name="RequestView"),
     path('addevent/', views.AddEventView.as_view(), name="AddEventView"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
