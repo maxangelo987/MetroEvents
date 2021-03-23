@@ -18,8 +18,10 @@ class Event(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
     datetime = models.DateTimeField()
-    is_cancelled = models.BooleanField(default=False)
     address = models.CharField(max_length=200)
+    event_pic = models.ImageField(upload_to='media/')
+    is_cancelled = models.BooleanField(default=False)
+    
 
     organizers = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='organized_events')
     participants = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='joined_events')

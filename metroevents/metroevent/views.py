@@ -26,7 +26,7 @@ def SignUpView(request):
 			user = form.cleaned_data.get('username')
 			# messages.success(request,'Account was created for '+user)
 			messages.success(request, 'Registration Successful')
-			return redirect('metroevent:HomePageView')
+			return redirect('metroevent:LoginView')
 
 	context = {'form':form}
 	return render(request,'signup.html',context)
@@ -112,6 +112,28 @@ class OrgProfileView(View):
 class AddEventView(View):
 	def get(self, request):
 		return render(request, 'addevent.html')
+
+	def post(self,request):
+		form = EventForm(request.POST, request.FILES)
+		print('hh')
+		if form.is_valid():
+			name = request.POST.get('name')
+			description = request.POST.get('description')
+			datetime = request.POST.get('datetime')
+			address = request.POST.get('address')
+			event_pic = request.FILES['event_pic']
+			print('hh')
+
+			form = Event(name = name, datetime = datetime, address = address, description = description, event_pic=event_pic)
+			form.save()
+			print('hh')
+
+			print('saved')
+			return HttpResponse('Event added!')
+		else:
+			print(form.errors)
+			print('wrong')
+			return HttpResponse('Unsuccessful Save')
 
 class RequestView(View):
 	def get(self, request):

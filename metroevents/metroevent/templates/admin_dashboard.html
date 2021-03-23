@@ -41,42 +41,51 @@
             <div class="container">
                 <div class="main-body"> 
                     <div> <br> </div>
-        
-        <!-- Profile details-->
-        <div class="row gutters-sm">
-            <div class="col-md-12 mb-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div>               
-                            <a href='{% url "metroevent:UsersAdminView" %}'><h4>USERS LIST SUMMARY </h4></a>            
+                    <!-- Profile details-->
+                    <div class="row gutters-sm">
+                        <div class="col-md-12 mb-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div>               
+                                                    <a href='{% url "metroevent:UsersAdminView" %}'><h4>USERS TABLE  </h4></a>            
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div>               
+                                                    <a href='{% url "metroevent:EventsAdminView" %}'><h4>EVENTS TABLE  </h4> </a>           
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>   
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div>               
+                                                    <a href='{% url "metroevent:OrgAdminView" %}'>  <h4>ORGANIZERS TABLE </h4></a>           
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div>               
+                                                    <a href='{% url "metroevent:RequestView" %}'>  <h4>REQUEST TABLE </h4></a>         
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                                   
-                    
-<br>
-                        <div>
-                <a href='{% url "metroevent:EventsAdminView" %}'><h4>EVENTS LIST SUMMARY </h4> </a>
-                
-            </div>
-          
-            
-        <br>
-        <div>
-               <a href='{% url "metroevent:OrgAdminView" %}'>  <h4>ORGANIZERS LIST SUMMARY </h4></a>
-                
-            <!--  <button onclick="location.href = 'http://127.0.0.1:8000/metroevent/organizers_admin/';" id="myButton" class="float-left submit-button" style="border-radius: 4px; height: 4%; width: 6%; font-size: 20px; background-color: #fed136; border: none; position: absolute; right: 0; top: 117%; right: 12.3%;"><i class="fa fa-book"></i> VIEW</button> -->
-            </div>
-
-             <div>
-               <a href='{% url "metroevent:RequestView" %}'>  <h4>REQUEST TABLE </h4></a>
-                
-            <!--  <button onclick="location.href = 'http://127.0.0.1:8000/metroevent/organizers_admin/';" id="myButton" class="float-left submit-button" style="border-radius: 4px; height: 4%; width: 6%; font-size: 20px; background-color: #fed136; border: none; position: absolute; right: 0; top: 117%; right: 12.3%;"><i class="fa fa-book"></i> VIEW</button> -->
-            </div>
-            
-            
                     </div>
-                </div>
-            </div>
-
                 </div>
             </div>
         </section>
