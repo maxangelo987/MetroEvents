@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
+
 # Create your views here.
 
 def SignUpView(request):
@@ -67,13 +68,23 @@ class IndexView(View):
 
 class HomePageView(View):
 	def get(self, request):
-
 		event = Event.objects.all()
 		context = {
 				'events' : event,
 				}
 
 		return render(request, 'homepage.html', context)
+
+	def post(self,request):
+
+		if 'joinEventBtn' in request.POST:
+			eventid = request.POST.get('eventid')
+			joinReq = Request.objects.create(user_id_id=request.user.id, request_type="Join event", event_id_id=eventid)
+			print('saved')
+			return HttpResponse('Request sent!')
+
+		return redirect('metroevent:HomePageView')
+
 
 class AdminView(View):
 	def get(self, request):
@@ -94,9 +105,41 @@ class UsersAdminView(View):
 				}
 		return render(request, 'users.html', context)
 
+	def post(self, request):
+		if request.method == 'POST':	
+			if 'btnUpdate' in request.POST:	
+				print('Update Button Clicked')
+				users = request.POST.get("user-id")
+				first_name = request.POST.get("user-fname")
+				last_name = request.POST.get("user-lname")
+				email = request.POST.get("user-email")
+				username = request.POST.get("user-username")
+				date_joined = request.POST.get("user-dateJoined")
+								
+				update_user = User.objects.filter(id = users).update(first_name=first_name, last_name=last_name, email=email, 
+								username=username)
+
+
+				print(update_user)
+		
+				print('User Details Updated!')
+
+			elif 'btnDelete' in request.POST:	
+
+				print('Delete Button Clicked')
+				users = request.POST.get("user-id")
+				user = User.objects.filter(id = users).delete()
+				print('Users Record Deleted')
+		return redirect('metroevent:UsersAdminView')
+
 class EventsAdminView(View):
 	def get(self, request):
-		return render(request, 'events.html')
+		event = Event.objects.all()
+
+		context = {
+				'events' : event,
+				}
+		return render(request, 'events.html', context)
 
 class OrgAdminView(View):
 	def get(self, request):
@@ -143,4 +186,19 @@ class AddEventView(View):
 
 class RequestView(View):
 	def get(self, request):
-		return render(request, 'requests.html')
+		reqs = Request.objects.all()
+
+		context = {
+				'reqs' : reqs,
+				}
+		return render(request, 'requests.html', context)
+
+	def post(self,request):
+		if 'EventReqAcceptBtn' in request.POST:
+			event = Event.objects.get(id=request.POST.get('eventid'))
+			req = Request.objects.get(id=request.POST.get('requestid'))
+			user = User.objects.get(id=request.POST.get('userid'))
+			event.participants(user)
+			req.is_approved = 1
+			req.save()
+		return redirect('metroevent:RequestView')

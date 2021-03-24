@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Admin dashboard</title>
+        <title>Admin - Event table</title>
         <link rel="icon" type="image/x-icon" href="{% static 'images/assets/img/favicon.ico' %}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -62,18 +62,19 @@
                 </tr>
             </thead>
             <tbody>              
-                                          
+                      {% for event in events %}                   
                 <tr>
-                    <td>12-456-789</td>
-                    <td>Zumba</td>
-                    <td>Dance exercise</td>
+                    <td>{{event.id}}</td>
+                    <td>{{event.name}}</td>
+                    <td>{{event.description}}</td>
                     <td>
-                        <a type="button" class="btn btn-primary" href="#" data-toggle="modal" data-target="#newModal-{{student.id}}" style="background-color: #fed136; border: none; color: black;"><i class="fa fa-edit"></i> DETAILS</a>
+                        <a type="button" class="btn btn-primary" href="#" data-toggle="modal" data-target="#newModal-{{event.id}}" style="background-color: #fed136; border: none; color: black;"><i class="fa fa-edit"></i> DETAILS</a>
                     </td>
                    
                 </tr>
+               
                 <!-- Modal VIEW-->
-                  <div class="modal fade" id="newModal-{{student.id}}" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="newModal-{{event.id}}" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header" style="background-color:#282828">
@@ -90,24 +91,21 @@
                             <div class="col-12" id="startup-tab-1">
                                 <div class = "row">
                                   <div class = "col-sm-4">
-                                    <input type="text" class="form-control" id="id-firstname" placeholder="Event type" name="student-fname" value ={{student.firstname}}>
+                                    <input type="text" class="form-control" id="id-middlename" placeholder="Event name"  name="student-mname" value ={{event.name}}>
                                   </div>
                                   <div class = "col-sm-4">
-                                    <input type="text" class="form-control" id="id-middlename" placeholder="Event name"  name="student-mname" value ={{student.middlename}}>
-                                  </div>
-                                  <div class = "col-sm-4">
-                                    <input type="text" class="form-control" id="id-lastname" placeholder="Description"  name="student-lname" value ={{student.lastname}}>
+                                    <input type="text" class="form-control" id="id-lastname" placeholder="Description"  name="student-lname" value ={{event.description}}>
                                   </div>
                                 </div>
                                 
                               <div class = "row">
                                 <div class = "col-sm-6">
-                                  <label>Start date</label>
-                                  <input type="date" class="form-control" id="id-bdate" name="student-bdate" value = {{student.birthdate}}>
+                                  <label>Date</label>
+                                  <input type="date" class="form-control" id="id-bdate" name="student-bdate" value = "{{event.datetime}}">
                                 </div>
                                 <div class = "col-sm-6">
-                                  <label>End date</label>
-                                  <input type="date" class="form-control" id="id-bdate" name="student-bdate" value = {{student.birthdate}}>
+                                  <label>Event Participants</label>
+                                  <textarea class="form-control"> {{event.participants.all}} </textarea> 
                                 </div>
                               </div>
                             </div>
@@ -169,7 +167,7 @@
                     </form>
                     </div>
                   </div>
-                
+                 {% endfor %}
             </tbody>
         </table>
       </div>
