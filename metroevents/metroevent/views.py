@@ -73,7 +73,7 @@ class HomePageView(View):
 				'events' : event,
 				}
 
-		return render(request, 'homepage.html')
+		return render(request, 'homepage.html', context)
 
 class AdminView(View):
 	def get(self, request):
