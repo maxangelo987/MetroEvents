@@ -163,6 +163,30 @@ class EventsAdminView(View):
 				'events' : event,
 				}
 		return render(request, 'events.html', context)
+	def post(self, request):
+		if request.method == 'POST':	
+			if 'btnUpdate' in request.POST:	
+				print('Update Button Clicked')
+				events=request.POST.get("event-id")
+				name = request.POST.get("event-name")
+				description = request.POST.get("event-description")
+				datetime = request.POST.get("event-datetime")
+				address = request.POST.get("event-address")
+						
+				update_event = Event.objects.filter(id = events).update(name=name, description=description, address=address)
+
+
+				print(update_event)
+		
+				print('Event Details Updated!')
+
+			elif 'btnDelete' in request.POST:	
+
+				print('Delete Button Clicked')
+				events = request.POST.get("event-id")
+				event = Event.objects.filter(id = events).delete()
+				print('Events Record Deleted')
+		return redirect('metroevent:EventsAdminView')
 
 @method_decorator(login_required, name='dispatch')
 class OrgAdminView(View):
