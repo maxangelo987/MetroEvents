@@ -20,6 +20,7 @@
 
     <body id="page-top">
         <!-- Navigation-->
+        {% if user.is_authenticated %}
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{% static 'images/metro.jfif' %}" alt="" /></a>
@@ -30,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Events</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href='{% url "metroevent:ProfileView" %}'>Profile</a>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href='{% url "metroevent:ProfileView" %}'>Hi, {{username}}</a>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href='{% url "metroevent:LogoutView" %}'>Logout</a>
                         </li>
                     </ul>
@@ -142,6 +143,8 @@
                 </form>
             </div>
         </section>
+
+    {% endif %}
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">

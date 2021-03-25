@@ -69,6 +69,7 @@ class IndexView(View):
 class HomePageView(View):
 	def get(self, request):
 		event = Event.objects.all()
+
 		context = {
 				'events' : event,
 				}
@@ -79,7 +80,7 @@ class HomePageView(View):
 
 		if 'joinEventBtn' in request.POST:
 			eventid = request.POST.get('eventid')
-			joinReq = Request.objects.create(user_id_id=request.user.id, request_type="Join event", event_id_id=eventid)
+			joinReq = Request.objects.create(user_id=request.user.id, request_type="Join event", event_id=eventid)
 			print('saved')
 			return HttpResponse('Request sent!')
 
@@ -148,8 +149,12 @@ class OrgAdminView(View):
 class ProfileView(View):
 	def get(self, request):
 		user = User.objects.all()
+		event = Event.objects.exclude(participants=request.user)
+		joinedEvent = Event.objects.filter(participants=request.user)
 
 		context = {
+				'joinedEvents' : joinedEvent,
+				'events' : event,
 				'users' : user,
 				}
 		return render(request, 'profile.html', context)
@@ -199,6 +204,6 @@ class RequestView(View):
 			req = Request.objects.get(id=request.POST.get('requestid'))
 			user = User.objects.get(id=request.POST.get('userid'))
 			event.participants(user)
-			req.is_approved = 1
+			req.status = "Approved"
 			req.save()
 		return redirect('metroevent:RequestView')

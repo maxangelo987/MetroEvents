@@ -18,5 +18,5 @@ class EventForm(forms.ModelForm):
 class RequestForm(forms.ModelForm):
 	class Meta:
 		model = Request
-		fields = ['request_type','event_id']
+		fields = ['request_type','event']
     
