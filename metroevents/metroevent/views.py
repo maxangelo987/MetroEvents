@@ -12,6 +12,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -26,7 +28,7 @@ def SignUpView(request):
 			form.save()
 			user = form.cleaned_data.get('username')
 			# messages.success(request,'Account was created for '+user)
-			messages.success(request, 'Registration Successful')
+			return HttpResponse('Registration Successful')
 			return redirect('metroevent:LoginView')
 
 	context = {'form':form}
@@ -50,6 +52,8 @@ class LoginView(View):
 				request.session['username'] = username
 				if request.user.is_superuser:
 					return redirect('metroevent:AdminView')
+				if request.user.is_staff:
+					return redirect('metroevent:OrgProfileView')
 				else:
 					return redirect('metroevent:HomePageView')
 			else:
@@ -66,27 +70,44 @@ class IndexView(View):
 	def get(self, request):
 		return render(request, 'index.html')
 
+@method_decorator(login_required, name='dispatch')
 class HomePageView(View):
 	def get(self, request):
 		event = Event.objects.all()
+		totalparticipants = Event.objects.filter(participants=request.user).count()
 
 		context = {
 				'events' : event,
+				'totalparticipants' : totalparticipants,
 				}
-
 		return render(request, 'homepage.html', context)
 
 	def post(self,request):
 
 		if 'joinEventBtn' in request.POST:
 			eventid = request.POST.get('eventid')
+
+			joinReqs = Request.objects.filter(user=request.user, request_type="Join event", event_id=eventid)
+
+			if joinReqs:
+				return HttpResponse('Request already submitted.')
+
 			joinReq = Request.objects.create(user_id=request.user.id, request_type="Join event", event_id=eventid)
-			print('saved')
-			return HttpResponse('Request sent!')
+			return HttpResponse('Request sent! Please wait for the confirmation')
+
+		elif 'requestOrgBtn' in request.POST:
+			orgReqs = Request.objects.filter(user=request.user, request_type="Be an organizer")
+
+			if orgReqs:
+				return HttpResponse('Request already submitted.')
+				return redirect('metroevent:HomePageView')
+
+			orgReq = Request.objects.create(user=request.user, request_type="Be an organizer")
+			return HttpResponse('Request sent! Please wait for the confirmation')
 
 		return redirect('metroevent:HomePageView')
 
-
+@method_decorator(login_required, name='dispatch')
 class AdminView(View):
 	def get(self, request):
 		user = User.objects.all()
@@ -96,7 +117,7 @@ class AdminView(View):
 				}
 		return render(request, 'admin_dashboard.html', context)
 
-
+@method_decorator(login_required, name='dispatch')
 class UsersAdminView(View):
 	def get(self, request):
 		user = User.objects.all()
@@ -133,6 +154,7 @@ class UsersAdminView(View):
 				print('Users Record Deleted')
 		return redirect('metroevent:UsersAdminView')
 
+@method_decorator(login_required, name='dispatch')
 class EventsAdminView(View):
 	def get(self, request):
 		event = Event.objects.all()
@@ -142,13 +164,21 @@ class EventsAdminView(View):
 				}
 		return render(request, 'events.html', context)
 
+@method_decorator(login_required, name='dispatch')
 class OrgAdminView(View):
 	def get(self, request):
-		return render(request, 'organizers.html')
+		organizer = Organizer.objects.all()
 
+		context = {
+				'organizers' : organizer,
+				}
+
+		return render(request, 'organizers.html', context)
+
+@method_decorator(login_required, name='dispatch')
 class ProfileView(View):
 	def get(self, request):
-		user = User.objects.all()
+		user = User.objects.filter(username=request.user)
 		event = Event.objects.exclude(participants=request.user)
 		joinedEvent = Event.objects.filter(participants=request.user)
 
@@ -157,41 +187,79 @@ class ProfileView(View):
 				'events' : event,
 				'users' : user,
 				}
-		return render(request, 'profile.html', context)
-			
+
+		if request.user.is_staff:
+			return redirect('metroevent:OrgProfileView')
+		else:
+			return render(request, 'profile.html', context)
+
+@method_decorator(login_required, name='dispatch')			
 class OrgProfileView(View):
 	def get(self, request):
-		return render(request, 'organizer_profile.html')
+		organizer = request.user
+		user = User.objects.filter(username=request.user)
+		#event = Event.objects.exclude(organizer=organizer)
+		#joinedEvent = Event.objects.filter(organizer=organizer)
+		reqs = Request.objects.filter(request_type="Join event", status="Pending")
 
-class AddEventView(View):
-	def get(self, request):
-		return render(request, 'addevent.html')
+		context = {
+				#'joinedEvent' : joinedEvent,
+				#'events' : event,
+				'users' : user,
+				'reqs' : reqs,
+				}
+		return render(request, 'organizer_profile.html', context)
 
 	def post(self,request):
-		form = EventForm(request.POST, request.FILES)
-		print('hh')
-		if form.is_valid():
-			name = request.POST.get('name')
-			description = request.POST.get('description')
-			datetime = request.POST.get('datetime')
-			address = request.POST.get('address')
-			event_pic = request.FILES['event_pic']
-			print('hh')
 
-			form = Event(name = name, datetime = datetime, address = address, description = description, event_pic=event_pic)
-			form.save()
-			print('hh')
+		if 'EventReqAcceptBtn' in request.POST:
+			event = Event.objects.get(id=request.POST.get('event_id'))
+			req = Request.objects.get(id=request.POST.get('request_id'))
+			user = User.objects.get(id=request.POST.get('user_id'))
+			event.participants.add(user)
+			req.status = "Approved"
+			req.save()
 
-			print('saved')
-			return HttpResponse('Event added!')
-		else:
-			print(form.errors)
-			print('wrong')
-			return HttpResponse('Unsuccessful Save')
+		elif 'EventReqDeclineBtn' in request.POST:
+			req = Request.objects.get(id=request.POST.get("requestid"))
+			req.status = "Declined"
+			req.save()
+		return redirect('metroevent:OrgProfileView')
 
-class RequestView(View):
+
+@method_decorator(login_required, name='dispatch')
+class AddEventView(View):
 	def get(self, request):
-		reqs = Request.objects.all()
+		if request.user.is_authenticated:
+			if request.user.is_superuser or request.user.is_staff:
+				return render(request, 'addevent.html')
+			else:
+				return HttpResponse("Error")
+		return redirect('metroevent:LoginView')
+
+	def post(self, request):
+		organizer = Organizer.objects.get(organizer_id=request.user)
+		name = request.POST.get('name')
+		description = request.POST.get('description')
+		datetime = request.POST.get('datetime')
+		address = request.POST.get('address')
+		event_pic = request.FILES['event_pic']
+		event = Event.objects.create(name = name, datetime = datetime, address = address, description = description, event_pic=event_pic)
+		organizer.event.add(event)
+
+		return HttpResponse('Event added!')
+
+		if request.user.is_superuser:
+			return redirect('metroevent:EventsAdminView')
+		elif request.user.is_staff:
+			return redirect('metroevent:OrgProfileView')
+		else:
+			return redirect('metroevent:LoginView')
+
+@method_decorator(login_required, name='dispatch')
+class RequestView(View):
+	def get(self, request): 
+		reqs = Request.objects.filter(request_type="Be an Organizer", status="Pending")
 
 		context = {
 				'reqs' : reqs,
@@ -199,11 +267,21 @@ class RequestView(View):
 		return render(request, 'requests.html', context)
 
 	def post(self,request):
-		if 'EventReqAcceptBtn' in request.POST:
-			event = Event.objects.get(id=request.POST.get('eventid'))
-			req = Request.objects.get(id=request.POST.get('requestid'))
-			user = User.objects.get(id=request.POST.get('userid'))
-			event.participants(user)
-			req.status = "Approved"
+		if 'OrgReqAcceptBtn' in request.POST:
+			req = Request.objects.get(id=request.POST.get('request_id'))
+			userid = request.POST.get("user_id")
+			organizer = Organizer.objects.create(organizer_id=userid)
+			req.status = "Accepted"
+			user = req.user
+			user.is_staff = True
+			organizer.save()
 			req.save()
+			user.save()
+
+		elif 'OrgReqDeclineBtn' in request.POST:
+			req = Request.objects.get(id=request.POST.get("request_id"))
+			req.status = "Declined"
+			req.save()
+
 		return redirect('metroevent:RequestView')
+

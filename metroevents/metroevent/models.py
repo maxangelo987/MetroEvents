@@ -25,7 +25,7 @@ class Event(models.Model):
     is_cancelled = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
 
-    participants = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name='joined_events')
+    participants = models.ManyToManyField(User, blank=True)
 
     class Meta:
     	db_table = "Event"
@@ -36,7 +36,7 @@ class Request(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="sender")
 
-    event= models.ForeignKey(Event, on_delete=models.CASCADE, related_name='events')
+    event= models.ForeignKey(Event, on_delete=models.SET_NULL, null=True, blank=True, related_name='events')
 
     status = models.CharField(max_length= 150, default="Pending", blank=True, null=True)
     created_at = models.DateTimeField(default= timezone.now)
@@ -53,10 +53,6 @@ class Organizer(models.Model):
 
     class Meta:
         db_table = "Organizer"
-
-    def __str__(self):
-        return self.organizer_id.username
-
     
 
 class Administrator(models.Model):
@@ -66,9 +62,7 @@ class Administrator(models.Model):
     class Meta:
         db_table = "Administrator"
 
-    def __str__(self):
-        return self.admin_id.username
-
+        
 
 
 
