@@ -10579,6 +10579,18 @@ section#contact form#contactForm :-ms-input-placeholder {
         <input type="password" name="password" autocomplete="new-password" required="" id="id_password" placeholder="Password" class="txtb">
         <input type="submit" value="Log in" class="login-btn">
         <a href='{% url "metroevent:SignUpView" %}'>No account? Sign up here</a>
+        <div class= "form-group">
+            <!-- {{form.errors}} -->
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+            <li>
+            <div class="alert-success"> {{ message }}</div>
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif%}
+        </div>
       </form>
     </div>
   </body>

@@ -27,8 +27,8 @@ def SignUpView(request):
 		if form.is_valid():
 			form.save()
 			user = form.cleaned_data.get('username')
-			# messages.success(request,'Account was created for '+user)
-			return HttpResponse('Registration Successful')
+			messages.success(request,'Account was created for '+user)
+			#return HttpResponse('Registration Successful')
 			return redirect('metroevent:LoginView')
 
 	context = {'form':form}
