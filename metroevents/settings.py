@@ -82,9 +82,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'metroevents3_db',
-        'USER': 'adminmetro3@group3metroevents-db',
-        'PASSWORD': 'group3Metro',
-        'HOST': 'group3metroevents-db.mysql.database.azure.com',
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }

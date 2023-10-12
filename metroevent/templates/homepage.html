@@ -10124,7 +10124,7 @@ header.masthead {
   padding-top: 10.5rem;
   padding-bottom: 6rem;
   text-align: center;
-  color: #fff;
+  color: #ffffff; /* Change this line to use the correct color code */
   background-image: url("../assets/img/header-bg.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -10495,15 +10495,15 @@ section#contact form#contactForm :-ms-input-placeholder {
     <body id="page-top">
         <!-- Navigation-->
         {% if user.is_authenticated %}
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-dark" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{% static 'images/metro.jfif' %}" alt="" /></a>
+                <a class="navbar-brand js-scroll-trigger bg-dark" href="#page-top"><img src="{% static 'images/metro.jfif' %}" alt="" /></a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ml-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ml-auto">
+                  <ul class="navbar-nav text-uppercase ml-auto">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Events</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href='{% url "metroevent:ProfileView" %}'>Hi, {{username}}</a>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href='{% url "metroevent:LogoutView" %}'>Logout</a>
@@ -10515,9 +10515,9 @@ section#contact form#contactForm :-ms-input-placeholder {
         <!-- Masthead-->
 
    <div style=" background-image: url(/static/images/bg.jpg)"> 
-        <header class="masthead">
+        <header class="masthead bg-dark">
             <div class="container">
-                <div class="masthead-subheading">Welcome To Metro Events!</div> 
+                <div class="nav-item"><a class="nav-link js-scroll-trigger" >Welcome To Metro Events!</div> 
                 <div class="masthead-heading text-uppercase">It's Nice To Meet You</div> 
                 <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href=#portfolio>Browse Events</a>
             </div>
@@ -10525,7 +10525,7 @@ section#contact form#contactForm :-ms-input-placeholder {
     </div>        
 
     <section class="page-section" id="portfolio">
-        <div class="container">
+        <div class="container bg-dark">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Events</h2>
                 <h3 class="section-subheading text-muted">Join events now!</h3>
@@ -10533,7 +10533,7 @@ section#contact form#contactForm :-ms-input-placeholder {
             {% for event in events %}
            
             <div class="col">
-                <div class="portfolio-item">
+                <div class="portfolio-item bg-dark">
                     <a class="portfolio-link" data-toggle="modal" data-target="#newModal-{{event.id}}">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
@@ -10607,7 +10607,7 @@ section#contact form#contactForm :-ms-input-placeholder {
         <footer class="footer py-4">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-left">Copyright © MetroEvents 2021</div>
+                    <div class="col-lg-4 text-lg-left">Copyright © MetroEvents 2023</div>
                     <div class="col-lg-4 my-3 my-lg-0">
                         <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>

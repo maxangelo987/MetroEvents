@@ -44,7 +44,7 @@ class LoginView(View):
 			password = request.POST.get('password')
 
 			user = authenticate(request, username=username, password=password)
-			print(user)
+			#print(user)
 
 			if user is not None:
 				login(request, user)
