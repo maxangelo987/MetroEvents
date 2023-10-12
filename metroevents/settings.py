@@ -26,7 +26,7 @@ REPOSITORY_ROOT = os.path.dirname(BASE_DIR)
 SECRET_KEY = 'f7a-*0uormmkv-+nxyg!2h6pg)y^8+&wl@5ijlaj4fqf+89h&x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
